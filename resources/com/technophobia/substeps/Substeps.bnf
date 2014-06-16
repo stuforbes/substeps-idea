@@ -1,0 +1,17 @@
+{
+    parserClass="com.technophobia.substeps.parser.SubstepsParser"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="SubstepsDefinition"
+    psiImplClassSuffix="Impl"
+    psiImplPackage="com.technophobia.substeps.psi"
+    psiImplPackage="com.technophobia.substeps.psi.impl"
+
+    elementTypeHolderClass="com.technophobia.substeps.psi.SubstepsDefinitionTypes"
+    elementTypeClass="com.technophobia.substeps.psi.SubstepsDefinitionElementType"
+    tokenTypeClass="com.technophobia.substeps.psi.SubstepsDefinitionTokenType"
+}
+
+substepsFile ::= item_*
+
+private item_ ::= (definition|step|COMMENT|CRLF)
