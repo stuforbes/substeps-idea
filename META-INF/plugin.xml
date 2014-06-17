@@ -28,7 +28,10 @@
     <!-- Add your extensions here -->
       <fileTypeFactory implementation="com.technophobia.substeps.language.SubstepsFileTypeFactory"/>
 
-      <lang.parserDefinition language="Substeps" implementationClass="com.technophobia.substeps.parser.SubstepsDefinitionParserDefinition"/>
+      <lang.parserDefinition language="Substeps" implementationClass="com.technophobia.substeps.parser.substepsdefinition.SubstepsDefinitionParserDefinition"/>
+      <lang.parserDefinition language="Feature" implementationClass="com.technophobia.substeps.parser.feature.FeatureParserDefinition"/>
+
+      <lang.syntaxHighlighterFactory key="Substeps" implementationClass="com.technophobia.substeps.syntax.substepsdefinition.SubstepsDefinitionSyntaxHighlighterFactory"/>
   </extensions>
 
   <application-components>

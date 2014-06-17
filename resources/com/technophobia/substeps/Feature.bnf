@@ -1,0 +1,22 @@
+{
+    parserClass="com.technophobia.substeps.parser.feature.FeatureParser"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Feature"
+    psiImplClassSuffix="Impl"
+    psiImplPackage="com.technophobia.substeps.psi.feature"
+    psiImplPackage="com.technophobia.substeps.psi.feature.impl"
+
+    elementTypeHolderClass="com.technophobia.substeps.psi.feature.FeatureTypes"
+    elementTypeClass="com.technophobia.substeps.psi.feature.FeatureElementType"
+    tokenTypeClass="com.technophobia.substeps.psi.feature.FeatureTokenType"
+}
+
+featureFile ::= item_*
+
+private item_ ::= (feature|tags|scenario|scenario_outline|STEP|COMMENT|CRLF)
+
+feature ::= (FEATURE_LABEL FEATURE_TEXT?)
+tags ::= (TAGS_LABEL TAGS_TEXT?)
+scenario ::= (SCENARIO_LABEL SCENARIO_TEXT?)
+scenario_outline ::= (SCENARIO_OUTLINE_LABEL SCENARIO_OUTLINE_TEXT?)

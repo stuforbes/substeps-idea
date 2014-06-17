@@ -1,15 +1,15 @@
 {
-    parserClass="com.technophobia.substeps.parser.SubstepsParser"
+    parserClass="com.technophobia.substeps.parser.substepsdefinition.SubstepsParser"
     extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
     psiClassPrefix="SubstepsDefinition"
     psiImplClassSuffix="Impl"
-    psiImplPackage="com.technophobia.substeps.psi"
-    psiImplPackage="com.technophobia.substeps.psi.impl"
+    psiImplPackage="com.technophobia.substeps.psi.substepsdefinition"
+    psiImplPackage="com.technophobia.substeps.psi.substepsdefinition.impl"
 
-    elementTypeHolderClass="com.technophobia.substeps.psi.SubstepsDefinitionTypes"
-    elementTypeClass="com.technophobia.substeps.psi.SubstepsDefinitionElementType"
-    tokenTypeClass="com.technophobia.substeps.psi.SubstepsDefinitionTokenType"
+    elementTypeHolderClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes"
+    elementTypeClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionElementType"
+    tokenTypeClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTokenType"
 }
 
 substepsFile ::= item_*
