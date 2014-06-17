@@ -20,7 +20,12 @@ public class SubstepsParser implements PsiParser {
     boolean result_;
     builder_ = adapt_builder_(root_, builder_, this, null);
     Marker marker_ = enter_section_(builder_, 0, _COLLAPSE_, null);
-    result_ = parse_root_(root_, builder_, 0);
+    if (root_ == DEFINITION) {
+      result_ = definition(builder_, 0);
+    }
+    else {
+      result_ = parse_root_(root_, builder_, 0);
+    }
     exit_section_(builder_, 0, marker_, root_, result_, true, TRUE_CONDITION);
     return builder_.getTreeBuilt();
   }
@@ -30,12 +35,32 @@ public class SubstepsParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // definition|step|COMMENT|CRLF
+  // DEFINITION_LABEL DEFINITION_TEXT?
+  public static boolean definition(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "definition")) return false;
+    if (!nextTokenIs(builder_, DEFINITION_LABEL)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DEFINITION_LABEL);
+    result_ = result_ && definition_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, DEFINITION, result_);
+    return result_;
+  }
+
+  // DEFINITION_TEXT?
+  private static boolean definition_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "definition_1")) return false;
+    consumeToken(builder_, DEFINITION_TEXT);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // definition|STEP|COMMENT|CRLF
   static boolean item_(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "item_")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, DEFINITION);
+    result_ = definition(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, STEP);
     if (!result_) result_ = consumeToken(builder_, COMMENT);
     if (!result_) result_ = consumeToken(builder_, CRLF);

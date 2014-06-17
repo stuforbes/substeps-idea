@@ -19,29 +19,32 @@ import com.technophobia.substeps.psi.SubstepsDefinitionTypes;
 %eof}
 
 Crlf=\r|\n|\r\n
-InputCharacter=[^\r\n]
+FirstTextCharacter=[^ \n\r\f\\] | "\\"{Crlf} | "\\".
+TextCharacter=[^\n\r\f\\] | "\\"{Crlf} | "\\".
 WhiteSpace=[\ \t\f]
+
+DefineLabel=Define:
 
 Comment=("#"|"!")[^\r\n]*
 
-Text={InputCharacter}*
-
-%state WAITING_VALUE
+%state CREATING_DEFINITION_TEXT
 
 %%
 
-<YYINITIAL> {Comment}                       { yybegin(YYINITIAL); return SubstepsDefinitionTypes.COMMENT; }
+<YYINITIAL> {Comment}                                               { yybegin(YYINITIAL); return SubstepsDefinitionTypes.COMMENT; }
 
-<YYINITIAL> Define:{Text}                   { yybegin(YYINITIAL); return SubstepsDefinitionTypes.DEFINITION; }
+<YYINITIAL> {DefineLabel}                                           { yybegin(CREATING_DEFINITION_TEXT); return SubstepsDefinitionTypes.DEFINITION_LABEL; }
 
-<YYINITIAL> {Text}                          { yybegin(YYINITIAL); return SubstepsDefinitionTypes.STEP; }
+<CREATING_DEFINITION_TEXT> {Crlf}                                   { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
 
-<WAITING_VALUE> {Crlf}                      { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
+<CREATING_DEFINITION_TEXT> {WhiteSpace}+                            { yybegin(CREATING_DEFINITION_TEXT); return TokenType.WHITE_SPACE; }
 
-<WAITING_VALUE> {WhiteSpace}+               { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
+<CREATING_DEFINITION_TEXT> {FirstTextCharacter}{TextCharacter}*     { yybegin(YYINITIAL); return SubstepsDefinitionTypes.DEFINITION_TEXT; }
 
-{Crlf}                                      { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
+<YYINITIAL> {WhiteSpace}+{FirstTextCharacter}{TextCharacter}*       { yybegin(YYINITIAL); return SubstepsDefinitionTypes.STEP; }
 
-{WhiteSpace}+                               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+{Crlf}                                                              { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
 
-. { return TokenType.BAD_CHARACTER; }
+{WhiteSpace}+                                                       { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+
+.                                                                   { return TokenType.BAD_CHARACTER; }

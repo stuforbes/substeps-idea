@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class SubstepsDefinitionVisitor extends PsiElementVisitor {
 
+  public void visitDefinition(@NotNull SubstepsDefinitionDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitPsiElement(@NotNull PsiElement o) {
     visitElement(o);
   }
