@@ -14,9 +14,12 @@
 
 featureFile ::= item_*
 
-private item_ ::= (feature|tags|scenario|scenario_outline|STEP|COMMENT|CRLF)
+private item_ ::= (feature|FEATURE_TEXT|tags|background|BACKGROUND_STEP|scenario|SCENARIO_STEP|scenario_outline|SCENARIO_OUTLINE_STEP|EXAMPLE|COMMENT|CRLF|EXAMPLE_TITLE_ROW|EXAMPLE_VALUE_ROW)
 
 feature ::= (FEATURE_LABEL FEATURE_TEXT?)
 tags ::= (TAGS_LABEL TAGS_TEXT?)
+background ::= (BACKGROUND_LABEL BACKGROUND_TEXT?)
 scenario ::= (SCENARIO_LABEL SCENARIO_TEXT?)
 scenario_outline ::= (SCENARIO_OUTLINE_LABEL SCENARIO_OUTLINE_TEXT?)
+//example_title_row ::= (EXAMPLE_TITLE_SEPARATOR EXAMPLE_FIELD_NAME)
+//example_value_row ::= (EXAMPLE_VALUE_SEPARATOR EXAMPLE_FIELD_VALUE)*

@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class FeatureVisitor extends PsiElementVisitor {
 
+  public void visitBackground(@NotNull FeatureBackground o) {
+    visitPsiElement(o);
+  }
+
   public void visitFeature(@NotNull FeatureFeature o) {
     visitPsiElement(o);
   }

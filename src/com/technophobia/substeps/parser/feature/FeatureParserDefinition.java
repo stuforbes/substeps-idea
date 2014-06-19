@@ -17,14 +17,13 @@ import com.technophobia.substeps.language.feature.FeatureLanguage;
 import com.technophobia.substeps.lexer.feature.FeatureLexer;
 import com.technophobia.substeps.psi.feature.FeatureFile;
 import com.technophobia.substeps.psi.feature.FeatureTypes;
-import com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Reader;
 
 public class FeatureParserDefinition implements ParserDefinition {
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
-    public static final TokenSet COMMENTS = TokenSet.create(SubstepsDefinitionTypes.COMMENT);
+    public static final TokenSet COMMENTS = TokenSet.create(FeatureTypes.COMMENT);
 
     public static final IFileElementType FILE = new IFileElementType(Language.<FeatureLanguage>findInstance(FeatureLanguage.class));
 

@@ -20,7 +20,10 @@ public class FeatureParser implements PsiParser {
     boolean result_;
     builder_ = adapt_builder_(root_, builder_, this, null);
     Marker marker_ = enter_section_(builder_, 0, _COLLAPSE_, null);
-    if (root_ == FEATURE) {
+    if (root_ == BACKGROUND) {
+      result_ = background(builder_, 0);
+    }
+    else if (root_ == FEATURE) {
       result_ = feature(builder_, 0);
     }
     else if (root_ == SCENARIO) {
@@ -41,6 +44,26 @@ public class FeatureParser implements PsiParser {
 
   protected boolean parse_root_(final IElementType root_, final PsiBuilder builder_, final int level_) {
     return featureFile(builder_, level_ + 1);
+  }
+
+  /* ********************************************************** */
+  // BACKGROUND_LABEL BACKGROUND_TEXT?
+  public static boolean background(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "background")) return false;
+    if (!nextTokenIs(builder_, BACKGROUND_LABEL)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, BACKGROUND_LABEL);
+    result_ = result_ && background_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, BACKGROUND, result_);
+    return result_;
+  }
+
+  // BACKGROUND_TEXT?
+  private static boolean background_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "background_1")) return false;
+    consumeToken(builder_, BACKGROUND_TEXT);
+    return true;
   }
 
   /* ********************************************************** */
@@ -77,18 +100,25 @@ public class FeatureParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // feature|tags|scenario|scenario_outline|STEP|COMMENT|CRLF
+  // feature|FEATURE_TEXT|tags|background|BACKGROUND_STEP|scenario|SCENARIO_STEP|scenario_outline|SCENARIO_OUTLINE_STEP|EXAMPLE|COMMENT|CRLF|EXAMPLE_TITLE_ROW|EXAMPLE_VALUE_ROW
   static boolean item_(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "item_")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = feature(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, FEATURE_TEXT);
     if (!result_) result_ = tags(builder_, level_ + 1);
+    if (!result_) result_ = background(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, BACKGROUND_STEP);
     if (!result_) result_ = scenario(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, SCENARIO_STEP);
     if (!result_) result_ = scenario_outline(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, STEP);
+    if (!result_) result_ = consumeToken(builder_, SCENARIO_OUTLINE_STEP);
+    if (!result_) result_ = consumeToken(builder_, EXAMPLE);
     if (!result_) result_ = consumeToken(builder_, COMMENT);
     if (!result_) result_ = consumeToken(builder_, CRLF);
+    if (!result_) result_ = consumeToken(builder_, EXAMPLE_TITLE_ROW);
+    if (!result_) result_ = consumeToken(builder_, EXAMPLE_VALUE_ROW);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
