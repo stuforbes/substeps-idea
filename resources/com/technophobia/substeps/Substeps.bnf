@@ -10,9 +10,11 @@
     elementTypeHolderClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes"
     elementTypeClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionElementType"
     tokenTypeClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTokenType"
+
+    psiImplUtilClass="com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil"
 }
 
 substepsFile ::= item_*
 
 private item_ ::= (definition|STEP|COMMENT|CRLF)
-definition ::= (DEFINITION_LABEL DEFINITION_TEXT?)
+definition ::= (DEFINITION_LABEL DEFINITION_TEXT?) | KEY {methods=[getDefinitionText]}

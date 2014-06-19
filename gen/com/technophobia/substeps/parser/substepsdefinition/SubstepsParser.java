@@ -35,21 +35,32 @@ public class SubstepsParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // DEFINITION_LABEL DEFINITION_TEXT?
+  // (DEFINITION_LABEL DEFINITION_TEXT?) | KEY
   public static boolean definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "definition")) return false;
-    if (!nextTokenIs(builder_, DEFINITION_LABEL)) return false;
+    if (!nextTokenIs(builder_, "<definition>", DEFINITION_LABEL, KEY)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, "<definition>");
+    result_ = definition_0(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, KEY);
+    exit_section_(builder_, level_, marker_, DEFINITION, result_, false, null);
+    return result_;
+  }
+
+  // DEFINITION_LABEL DEFINITION_TEXT?
+  private static boolean definition_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "definition_0")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, DEFINITION_LABEL);
-    result_ = result_ && definition_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, DEFINITION, result_);
+    result_ = result_ && definition_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
   // DEFINITION_TEXT?
-  private static boolean definition_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "definition_1")) return false;
+  private static boolean definition_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "definition_0_1")) return false;
     consumeToken(builder_, DEFINITION_TEXT);
     return true;
   }
