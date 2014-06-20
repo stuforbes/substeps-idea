@@ -14,5 +14,5 @@
 
 substepsFile ::= item_*
 
-private item_ ::= (definition|STEP|COMMENT|CRLF)
+private item_ ::= (definition|STEP|GENERAL_DIRECTIVE|COMMENT|CRLF)
 definition ::= (DEFINITION_LABEL DEFINITION_TEXT?)

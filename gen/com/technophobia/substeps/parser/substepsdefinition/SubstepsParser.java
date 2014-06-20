@@ -55,13 +55,14 @@ public class SubstepsParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // definition|STEP|COMMENT|CRLF
+  // definition|STEP|GENERAL_DIRECTIVE|COMMENT|CRLF
   static boolean item_(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "item_")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = definition(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, STEP);
+    if (!result_) result_ = consumeToken(builder_, GENERAL_DIRECTIVE);
     if (!result_) result_ = consumeToken(builder_, COMMENT);
     if (!result_) result_ = consumeToken(builder_, CRLF);
     exit_section_(builder_, marker_, null, result_);

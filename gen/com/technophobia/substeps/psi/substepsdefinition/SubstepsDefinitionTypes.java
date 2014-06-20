@@ -13,6 +13,7 @@ public interface SubstepsDefinitionTypes {
   IElementType CRLF = new SubstepsDefinitionTokenType("CRLF");
   IElementType DEFINITION_LABEL = new SubstepsDefinitionTokenType("DEFINITION_LABEL");
   IElementType DEFINITION_TEXT = new SubstepsDefinitionTokenType("DEFINITION_TEXT");
+  IElementType GENERAL_DIRECTIVE = new SubstepsDefinitionTokenType("GENERAL_DIRECTIVE");
   IElementType STEP = new SubstepsDefinitionTokenType("STEP");
 
   class Factory {

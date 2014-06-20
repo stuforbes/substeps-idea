@@ -14,9 +14,10 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.technophobia.substeps.language.SubstepsDefinitionLanguage;
-import com.technophobia.substeps.lexer.SubstepsDefinitionLexer;
+import com.technophobia.substeps.lexer.substepsdefinition.SubstepsDefinitionLexer;
+import com.technophobia.substeps.parser.substepsdefinition.SubstepsParser;
 import com.technophobia.substeps.psi.SubstepsDefinitionFile;
-import com.technophobia.substeps.psi.SubstepsDefinitionTypes;
+import com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Reader;

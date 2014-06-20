@@ -24,6 +24,7 @@ public class SubstepsDefinitionSyntaxHighlighter extends SyntaxHighlighterBase {
 
     public static final TextAttributesKey DEFINITION_LABEL = substepDefinitionTextAttributeKey("LABEL", Colours.DIRECTIVE_LABEL.attributes());
     public static final TextAttributesKey DEFINITION_TEXT = substepDefinitionTextAttributeKey("TEXT", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
+    public static final TextAttributesKey GENERAL_DIRECTIVE = substepDefinitionTextAttributeKey("GENERAL_DIRECTIVE", Colours.ERROR_CHAR.attributes());
     public static final TextAttributesKey STEP = substepDefinitionTextAttributeKey("STEP", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
     public static final TextAttributesKey COMMENT = substepDefinitionTextAttributeKey("COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
 
@@ -32,6 +33,7 @@ public class SubstepsDefinitionSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] BAD_CHAR_KEYS = asArray(BAD_CHARACTER);
     private static final TextAttributesKey[] DEFINITION_LABEL_KEYS = asArray(DEFINITION_LABEL);
     private static final TextAttributesKey[] DEFINITION_TEXT_KEYS = asArray(DEFINITION_TEXT);
+    private static final TextAttributesKey[] GENERAL_DIRECTIVE_KEYS = asArray(GENERAL_DIRECTIVE);
     private static final TextAttributesKey[] STEP_KEYS = asArray(STEP);
     private static final TextAttributesKey[] COMMENT_KEYS = asArray(COMMENT);
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
@@ -50,6 +52,8 @@ public class SubstepsDefinitionSyntaxHighlighter extends SyntaxHighlighterBase {
             return DEFINITION_LABEL_KEYS;
         } else if(tokenType.equals(SubstepsDefinitionTypes.DEFINITION_TEXT)) {
             return DEFINITION_TEXT_KEYS;
+        } else if(tokenType.equals(SubstepsDefinitionTypes.GENERAL_DIRECTIVE)){
+            return GENERAL_DIRECTIVE_KEYS;
         } else if(tokenType.equals(SubstepsDefinitionTypes.STEP)){
             return STEP_KEYS;
         } else if(tokenType.equals(SubstepsDefinitionTypes.COMMENT)){

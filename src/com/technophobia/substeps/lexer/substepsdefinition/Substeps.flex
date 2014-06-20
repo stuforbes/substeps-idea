@@ -23,11 +23,15 @@ FirstTextCharacter=[^ \n\r\f\\] | "\\"{Crlf} | "\\".
 TextCharacter=[^\n\r\f\\] | "\\"{Crlf} | "\\".
 WhiteSpace=[\ \t\f]
 
-DefineLabel=Define:
+DefineLabel=[D][e][f][i][n][e][:]
+
+//OtherDirective= (?!"Define:"][^\ \t\f]
 
 Comment=("#"|"!")[^\r\n]*
 
 %state CREATING_DEFINITION_TEXT
+
+%state CREATING_DEFINITION_STEPS
 
 %%
 
@@ -35,13 +39,17 @@ Comment=("#"|"!")[^\r\n]*
 
 <YYINITIAL> {DefineLabel}                                           { yybegin(CREATING_DEFINITION_TEXT); return SubstepsDefinitionTypes.DEFINITION_LABEL; }
 
-<CREATING_DEFINITION_TEXT> {Crlf}                                   { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
+<CREATING_DEFINITION_TEXT> {Crlf}                                   { yybegin(CREATING_DEFINITION_STEPS); return SubstepsDefinitionTypes.CRLF; }
 
 <CREATING_DEFINITION_TEXT> {WhiteSpace}+                            { yybegin(CREATING_DEFINITION_TEXT); return TokenType.WHITE_SPACE; }
 
-<CREATING_DEFINITION_TEXT> {FirstTextCharacter}{TextCharacter}*     { yybegin(YYINITIAL); return SubstepsDefinitionTypes.DEFINITION_TEXT; }
+<CREATING_DEFINITION_TEXT> {FirstTextCharacter}{TextCharacter}*     { yybegin(CREATING_DEFINITION_TEXT); return SubstepsDefinitionTypes.DEFINITION_TEXT; }
 
-<YYINITIAL> {WhiteSpace}+{FirstTextCharacter}{TextCharacter}*       { yybegin(YYINITIAL); return SubstepsDefinitionTypes.STEP; }
+<CREATING_DEFINITION_STEPS> {WhiteSpace}+{FirstTextCharacter}{TextCharacter}* { yybegin(CREATING_DEFINITION_STEPS); return SubstepsDefinitionTypes.STEP; }
+
+<CREATING_DEFINITION_STEPS> {Crlf}                                  { yybegin(CREATING_DEFINITION_STEPS); return SubstepsDefinitionTypes.CRLF; }
+
+<CREATING_DEFINITION_STEPS> {Crlf}{Crlf}                            { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
 
 {Crlf}                                                              { yybegin(YYINITIAL); return SubstepsDefinitionTypes.CRLF; }
 
