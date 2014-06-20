@@ -1,29 +1,24 @@
 package com.technophobia.substeps.model;
 
 import com.google.common.base.Function;
-import com.google.common.base.Supplier;
 import com.google.common.collect.Lists;
-import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.search.FileTypeIndex;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMember;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.searches.AnnotatedMembersSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.Processor;
 import com.intellij.util.Query;
-import com.intellij.util.indexing.FileBasedIndex;
-import com.technophobia.substeps.language.substepsdefinition.SubstepsDefinitionFileType;
 import com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionFile;
-import com.technophobia.substeps.runner.runtime.ClassLocator;
-import com.technophobia.substeps.runner.runtime.StepClassLocator;
-import com.technophobia.substeps.runner.syntax.SyntaxBuilder;
 import generated.psi.SubstepsDefinitionDefinition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SubstepsModel {
 

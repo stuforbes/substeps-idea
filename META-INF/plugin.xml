@@ -25,7 +25,15 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
+      <colorSettingsPage implementation="com.technophobia.substeps.settings.substepsdefinition.SubstepsDefinitionColourSettingsPage"/>
+
       <fileTypeFactory implementation="com.technophobia.substeps.language.SubstepsFileTypeFactory"/>
+
+      <lang.parserDefinition language="Substeps" implementationClass="com.technophobia.substeps.parser.substepsdefinition.SubstepsDefinitionParserDefinition"/>
+      <lang.parserDefinition language="Feature" implementationClass="com.technophobia.substeps.parser.feature.FeatureParserDefinition"/>
+
+      <lang.syntaxHighlighterFactory key="Substeps" implementationClass="com.technophobia.substeps.syntax.substepsdefinition.SubstepsDefinitionSyntaxHighlighterFactory"/>
+      <lang.syntaxHighlighterFactory key="Feature" implementationClass="com.technophobia.substeps.syntax.feature.FeatureSyntaxHighlighterFactory"/>
   </extensions>
 
   <application-components>
