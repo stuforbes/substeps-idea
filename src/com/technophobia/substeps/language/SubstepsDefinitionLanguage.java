@@ -1,4 +1,4 @@
-package com.technophobia.substeps.language.substepsdefinition;
+package com.technophobia.substeps.language;
 
 import com.intellij.lang.Language;
 

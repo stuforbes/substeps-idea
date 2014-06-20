@@ -1,10 +1,10 @@
 // This is a generated file. Not intended for manual editing.
-package com.technophobia.substeps.parser.substepsdefinition;
+package com.technophobia.substeps.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.openapi.diagnostic.Logger;
-import static com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes.*;
+import static com.technophobia.substeps.psi.SubstepsDefinitionTypes.*;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
@@ -14,7 +14,7 @@ import com.intellij.lang.PsiParser;
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class SubstepsParser implements PsiParser {
 
-  public static final Logger LOG_ = Logger.getInstance("com.technophobia.substeps.parser.substepsdefinition.SubstepsParser");
+  public static final Logger LOG_ = Logger.getInstance("com.technophobia.substeps.parser.SubstepsParser");
 
   public ASTNode parse(IElementType root_, PsiBuilder builder_) {
     boolean result_;

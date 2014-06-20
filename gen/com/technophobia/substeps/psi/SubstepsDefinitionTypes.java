@@ -1,5 +1,5 @@
 // This is a generated file. Not intended for manual editing.
-package com.technophobia.substeps.psi.substepsdefinition;
+package com.technophobia.substeps.psi;
 
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
