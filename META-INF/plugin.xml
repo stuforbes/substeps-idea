@@ -35,7 +35,8 @@
       <lang.syntaxHighlighterFactory key="Substeps" implementationClass="com.technophobia.substeps.syntax.substepsdefinition.SubstepsDefinitionSyntaxHighlighterFactory"/>
       <lang.syntaxHighlighterFactory key="Feature" implementationClass="com.technophobia.substeps.syntax.feature.FeatureSyntaxHighlighterFactory"/>
 
-      <editorHighlighterProvider filetype="Substeps definition file" implementationClass="com.technophobia.substeps.editor.EditorHighlighterProvider"/>
+      <editorHighlighterProvider filetype="Substeps definition file" implementationClass="com.technophobia.substeps.editor.FullLineUpdatingEditorHighlighterProvider"/>
+      <editorHighlighterProvider filetype="Feature file" implementationClass="com.technophobia.substeps.editor.FullLineUpdatingEditorHighlighterProvider"/>
 
   </extensions>
 

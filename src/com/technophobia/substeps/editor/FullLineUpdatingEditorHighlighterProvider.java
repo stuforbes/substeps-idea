@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.highlighter.EditorHighlighterFactory;
 import com.intellij.openapi.editor.highlighter.HighlighterClient;
 import com.intellij.openapi.editor.highlighter.HighlighterIterator;
 import com.intellij.openapi.editor.impl.event.DocumentEventImpl;
+import com.intellij.openapi.fileTypes.EditorHighlighterProvider;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.project.Project;
@@ -15,7 +16,12 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EditorHighlighterProvider implements com.intellij.openapi.fileTypes.EditorHighlighterProvider {
+/**
+ * Implementation of {@link com.intellij.openapi.fileTypes.EditorHighlighterProvider} which creates an {@link com.intellij.openapi.editor.highlighter.EditorHighlighter}
+ * implementation that intercepts beforeDocumentChange and documentChanged events in the {@link javax.swing.event.DocumentListener} event handler, and updates the start offset
+ * parameter to be the beginning of that line
+ */
+public class FullLineUpdatingEditorHighlighterProvider implements EditorHighlighterProvider {
     @Override
     public EditorHighlighter getEditorHighlighter(@Nullable Project project, @NotNull FileType fileType, @Nullable VirtualFile virtualFile, @NotNull EditorColorsScheme colors) {
         final EditorHighlighter delegate = EditorHighlighterFactory.getInstance().createEditorHighlighter(
@@ -52,6 +58,6 @@ public class EditorHighlighterProvider implements com.intellij.openapi.fileTypes
         final String substring = document.getText().substring(0, offset);
         final int newOffset = substring.lastIndexOf('\n') > -1 ? substring.lastIndexOf('\n') + 1 : 0;
 
-        return new DocumentEventImpl(document, newOffset, event.getOldFragment(), event.getNewFragment(), event.getOldTimeStamp(), true);
+        return new DocumentEventImpl(document, newOffset, event.getOldFragment(), event.getNewFragment(), event.getOldTimeStamp(), event.isWholeTextReplaced());
     }
 }
