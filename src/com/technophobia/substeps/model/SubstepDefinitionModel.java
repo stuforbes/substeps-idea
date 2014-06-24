@@ -1,15 +1,15 @@
 package com.technophobia.substeps.model;
 
-public class SubstepDefinitions {
+public class SubstepDefinitionModel implements Patterned{
 
     private final String text;
     private final String filename;
-    private final int line;
+    private final int offset;
 
-    public SubstepDefinitions(String text, String filename, int line) {
+    public SubstepDefinitionModel(String text, String filename, int offset) {
         this.text = text;
         this.filename = filename;
-        this.line = line;
+        this.offset = offset;
     }
 
     public String getText() {
@@ -20,8 +20,13 @@ public class SubstepDefinitions {
         return filename;
     }
 
-    public int getLine() {
-        return line;
+    public int getOffset() {
+        return offset;
+    }
+
+    @Override
+    public String pattern() {
+        return text;
     }
 
     @Override
@@ -29,9 +34,9 @@ public class SubstepDefinitions {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SubstepDefinitions that = (SubstepDefinitions) o;
+        SubstepDefinitionModel that = (SubstepDefinitionModel) o;
 
-        if (line != that.line) return false;
+        if (offset != that.offset) return false;
         if (filename != null ? !filename.equals(that.filename) : that.filename != null) return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
@@ -42,16 +47,16 @@ public class SubstepDefinitions {
     public int hashCode() {
         int result = text != null ? text.hashCode() : 0;
         result = 31 * result + (filename != null ? filename.hashCode() : 0);
-        result = 31 * result + line;
+        result = 31 * result + offset;
         return result;
     }
 
     @Override
     public String toString() {
-        return "SubstepDefinitions{" +
+        return "SubstepDefinitionModel{" +
                 "text='" + text + '\'' +
                 ", filename='" + filename + '\'' +
-                ", line=" + line +
+                ", offset=" + offset +
                 '}';
     }
 }

@@ -6,13 +6,17 @@
     psiImplClassSuffix="Impl"
     psiImplPackage="com.technophobia.substeps.psi.substepsdefinition"
     psiImplPackage="com.technophobia.substeps.psi.substepsdefinition.impl"
+    psiImplUtilClass="com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil"
 
     elementTypeHolderClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes"
     elementTypeClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionElementType"
     tokenTypeClass="com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTokenType"
+
 }
 
 substepsFile ::= item_*
 
-private item_ ::= (definition|STEP|GENERAL_DIRECTIVE|COMMENT|CRLF)
+private item_ ::= (definition|stepLine|GENERAL_DIRECTIVE|COMMENT|CRLF)
 definition ::= (DEFINITION_LABEL DEFINITION_TEXT?)
+
+stepLine ::= (STEP) | STEP {methods=[definitionForStepText]}

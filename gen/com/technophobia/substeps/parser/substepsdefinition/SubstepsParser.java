@@ -23,6 +23,9 @@ public class SubstepsParser implements PsiParser {
     if (root_ == DEFINITION) {
       result_ = definition(builder_, 0);
     }
+    else if (root_ == STEP_LINE) {
+      result_ = stepLine(builder_, 0);
+    }
     else {
       result_ = parse_root_(root_, builder_, 0);
     }
@@ -55,17 +58,30 @@ public class SubstepsParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // definition|STEP|GENERAL_DIRECTIVE|COMMENT|CRLF
+  // definition|stepLine|GENERAL_DIRECTIVE|COMMENT|CRLF
   static boolean item_(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "item_")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = definition(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, STEP);
+    if (!result_) result_ = stepLine(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, GENERAL_DIRECTIVE);
     if (!result_) result_ = consumeToken(builder_, COMMENT);
     if (!result_) result_ = consumeToken(builder_, CRLF);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (STEP) | STEP
+  public static boolean stepLine(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "stepLine")) return false;
+    if (!nextTokenIs(builder_, STEP)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, STEP);
+    if (!result_) result_ = consumeToken(builder_, STEP);
+    exit_section_(builder_, marker_, STEP_LINE, result_);
     return result_;
   }
 

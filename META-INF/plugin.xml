@@ -25,6 +25,8 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
+      <annotator language="Substeps" implementationClass="com.technophobia.substeps.search.substepsdefinition.SubstepsDefinitionAnnotator"/>
+
       <colorSettingsPage implementation="com.technophobia.substeps.settings.substepsdefinition.SubstepsDefinitionColourSettingsPage"/>
 
       <fileTypeFactory implementation="com.technophobia.substeps.language.SubstepsFileTypeFactory"/>

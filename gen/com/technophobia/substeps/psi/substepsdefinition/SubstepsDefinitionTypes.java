@@ -8,6 +8,7 @@ import com.intellij.lang.ASTNode;
 public interface SubstepsDefinitionTypes {
 
   IElementType DEFINITION = new SubstepsDefinitionElementType("DEFINITION");
+  IElementType STEP_LINE = new SubstepsDefinitionElementType("STEP_LINE");
 
   IElementType COMMENT = new SubstepsDefinitionTokenType("COMMENT");
   IElementType CRLF = new SubstepsDefinitionTokenType("CRLF");
@@ -21,6 +22,9 @@ public interface SubstepsDefinitionTypes {
       IElementType type = node.getElementType();
        if (type == DEFINITION) {
         return new SubstepsDefinitionDefinitionImpl(node);
+      }
+      else if (type == STEP_LINE) {
+        return new SubstepsDefinitionStepLineImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

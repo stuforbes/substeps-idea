@@ -12,15 +12,19 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import generated.psi.*;
 import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
 
-public class SubstepsDefinitionDefinitionImpl extends ASTWrapperPsiElement implements SubstepsDefinitionDefinition {
+public class SubstepsDefinitionStepLineImpl extends ASTWrapperPsiElement implements SubstepsDefinitionStepLine {
 
-  public SubstepsDefinitionDefinitionImpl(ASTNode node) {
+  public SubstepsDefinitionStepLineImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof SubstepsDefinitionVisitor) ((SubstepsDefinitionVisitor)visitor).visitDefinition(this);
+    if (visitor instanceof SubstepsDefinitionVisitor) ((SubstepsDefinitionVisitor)visitor).visitStepLine(this);
     else super.accept(visitor);
+  }
+
+  public String definitionForStepText() {
+    return SubstepsDefinitionPsiImplUtil.definitionForStepText(this);
   }
 
 }
