@@ -65,6 +65,13 @@ public class SubstepsDefinitionReference extends PsiReferenceBase<PsiElement> im
                                     withTypeText(definition.getContainingFile().getName())
                     );
                 }
+            } else if(element instanceof PsiMethod){
+                PsiMethod method = (PsiMethod) element;
+
+                variants.add(LookupElementBuilder.create(method, definitionsOrImpl.pattern())
+                        .withIcon(SubstepsIcons.FILE)
+                        .withTypeText(method.getContainingFile().getName())
+                );
             }
         }
         return variants.toArray();
