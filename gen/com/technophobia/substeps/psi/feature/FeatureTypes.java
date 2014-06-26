@@ -8,9 +8,12 @@ import com.intellij.lang.ASTNode;
 public interface FeatureTypes {
 
   IElementType BACKGROUND = new FeatureElementType("BACKGROUND");
+  IElementType BACKGROUND_STEP_LINE = new FeatureElementType("BACKGROUND_STEP_LINE");
   IElementType FEATURE = new FeatureElementType("FEATURE");
   IElementType SCENARIO = new FeatureElementType("SCENARIO");
   IElementType SCENARIO_OUTLINE = new FeatureElementType("SCENARIO_OUTLINE");
+  IElementType SCENARIO_OUTLINE_STEP_LINE = new FeatureElementType("SCENARIO_OUTLINE_STEP_LINE");
+  IElementType SCENARIO_STEP_LINE = new FeatureElementType("SCENARIO_STEP_LINE");
   IElementType TAGS = new FeatureElementType("TAGS");
 
   IElementType BACKGROUND_LABEL = new FeatureTokenType("BACKGROUND_LABEL");
@@ -38,6 +41,9 @@ public interface FeatureTypes {
        if (type == BACKGROUND) {
         return new FeatureBackgroundImpl(node);
       }
+      else if (type == BACKGROUND_STEP_LINE) {
+        return new FeatureBackgroundStepLineImpl(node);
+      }
       else if (type == FEATURE) {
         return new FeatureFeatureImpl(node);
       }
@@ -46,6 +52,12 @@ public interface FeatureTypes {
       }
       else if (type == SCENARIO_OUTLINE) {
         return new FeatureScenarioOutlineImpl(node);
+      }
+      else if (type == SCENARIO_OUTLINE_STEP_LINE) {
+        return new FeatureScenarioOutlineStepLineImpl(node);
+      }
+      else if (type == SCENARIO_STEP_LINE) {
+        return new FeatureScenarioStepLineImpl(node);
       }
       else if (type == TAGS) {
         return new FeatureTagsImpl(node);

@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.technophobia.substeps.psi.feature.FeatureTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import generated.psi.*;
+import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
 
 public class FeatureFeatureImpl extends ASTWrapperPsiElement implements FeatureFeature {
 

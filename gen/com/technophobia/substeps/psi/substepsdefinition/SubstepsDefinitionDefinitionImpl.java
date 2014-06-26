@@ -8,11 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepDefinitionNamedElementImpl;
 import generated.psi.*;
 import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
 
-public class SubstepsDefinitionDefinitionImpl extends ASTWrapperPsiElement implements SubstepsDefinitionDefinition {
+public class SubstepsDefinitionDefinitionImpl extends SubstepDefinitionNamedElementImpl implements SubstepsDefinitionDefinition {
 
   public SubstepsDefinitionDefinitionImpl(ASTNode node) {
     super(node);
@@ -21,6 +21,22 @@ public class SubstepsDefinitionDefinitionImpl extends ASTWrapperPsiElement imple
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SubstepsDefinitionVisitor) ((SubstepsDefinitionVisitor)visitor).visitDefinition(this);
     else super.accept(visitor);
+  }
+
+  public String definitionText() {
+    return SubstepsDefinitionPsiImplUtil.definitionText(this);
+  }
+
+  public PsiElement getNameIdentifier() {
+    return SubstepsDefinitionPsiImplUtil.getNameIdentifier(this);
+  }
+
+  public String getName() {
+    return SubstepsDefinitionPsiImplUtil.getName(this);
+  }
+
+  public PsiElement setName(String newName) {
+    return SubstepsDefinitionPsiImplUtil.setName(this, newName);
   }
 
 }

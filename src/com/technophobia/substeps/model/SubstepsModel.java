@@ -18,6 +18,8 @@ import com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionFile;
 import generated.psi.SubstepsDefinitionDefinition;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SubstepsModel {
@@ -30,17 +32,38 @@ public class SubstepsModel {
     private SubstepsModel() {
     }
 
-    public Optional<Patterned> findMatchingDefinitionsFor(Project project, String text) {
+    public Optional<PatternIdentifiedPsiElement> findMatchingDefinitionsFor(final Project project, final String text) {
+        final IdeaSyntax syntax = syntax(project);
+
+        Optional<PatternIdentifiedPsiElement> substepImplementationModelOptional = syntax.stepImplementationMatching(text);
+        Optional<PatternIdentifiedPsiElement> substepDefinitionModelOptional = syntax.substepDefinitionMatching(text);
+        return substepDefinitionModelOptional.or(substepImplementationModelOptional);
+    }
+
+    public List<PatternIdentifiedPsiElement> allDefinitionsFor(final Project project){
+        final IdeaSyntax syntax = syntax(project);
+
+        final List<PatternIdentifiedPsiElement> results = Lists.newArrayList();
+        results.addAll(syntax.allStepImplementations());
+        results.addAll(syntax.allSubstepDefinitions());
+
+        Collections.sort(results, new Comparator<PatternIdentifiedPsiElement>() {
+            @Override
+            public int compare(PatternIdentifiedPsiElement o1, PatternIdentifiedPsiElement o2) {
+                return o1.pattern().compareTo(o2.pattern());
+            }
+        });
+        return Collections.unmodifiableList(results);
+    }
+
+    private IdeaSyntax syntax(final Project project){
         if (syntax == null) {
             final List<SubstepDefinitionModel> definitionModels = loadDefinitions(project);
             final List<SubstepImplementationModel> implementationModels = loadImplementations(project);
 
             this.syntax = new IdeaSyntax(implementationModels, definitionModels);
         }
-
-        Optional<Patterned> substepImplementationModelOptional = syntax.stepImplementationMatching(text);
-        Optional<Patterned> substepDefinitionModelOptional = syntax.substepDefinitionMatching(text);
-        return substepDefinitionModelOptional.or(substepImplementationModelOptional);
+        return syntax;
     }
 
     private List<SubstepDefinitionModel> loadDefinitions(final Project project) {
@@ -54,7 +77,10 @@ public class SubstepsModel {
             SubstepsDefinitionDefinition[] definitions = PsiTreeUtil.getChildrenOfType(substepsFile, SubstepsDefinitionDefinition.class);
             if (definitions != null) {
                 for (SubstepsDefinitionDefinition definition : definitions) {
-                    definitionModels.add(new SubstepDefinitionModel(definition.getText(), virtualFile.getPresentableUrl(), definition.getStartOffsetInParent()));
+                    String definitionText = definition.definitionText();
+                    if(definitionText != null){
+                        definitionModels.add(new SubstepDefinitionModel(definition, virtualFile.getPresentableUrl()));
+                    }
                 }
             }
         }

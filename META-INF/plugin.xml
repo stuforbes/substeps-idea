@@ -25,7 +25,8 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-      <annotator language="Substeps" implementationClass="com.technophobia.substeps.search.substepsdefinition.SubstepsDefinitionAnnotator"/>
+      <annotator language="Substeps" implementationClass="com.technophobia.substeps.editor.annotation.substepsdefinition.SubstepsDefinitionAnnotator"/>
+      <annotator language="Feature" implementationClass="com.technophobia.substeps.editor.annotation.feature.FeatureAnnotator"/>
 
       <colorSettingsPage implementation="com.technophobia.substeps.settings.substepsdefinition.SubstepsDefinitionColourSettingsPage"/>
 
@@ -37,8 +38,10 @@
       <lang.syntaxHighlighterFactory key="Substeps" implementationClass="com.technophobia.substeps.syntax.substepsdefinition.SubstepsDefinitionSyntaxHighlighterFactory"/>
       <lang.syntaxHighlighterFactory key="Feature" implementationClass="com.technophobia.substeps.syntax.feature.FeatureSyntaxHighlighterFactory"/>
 
-      <editorHighlighterProvider filetype="Substeps definition file" implementationClass="com.technophobia.substeps.editor.FullLineUpdatingEditorHighlighterProvider"/>
-      <editorHighlighterProvider filetype="Feature file" implementationClass="com.technophobia.substeps.editor.FullLineUpdatingEditorHighlighterProvider"/>
+      <editorHighlighterProvider filetype="Substeps definition file" implementationClass="com.technophobia.substeps.editor.highlight.FullLineUpdatingEditorHighlighterProvider"/>
+      <editorHighlighterProvider filetype="Feature file" implementationClass="com.technophobia.substeps.editor.highlight.FullLineUpdatingEditorHighlighterProvider"/>
+
+      <psi.referenceContributor language="Substeps" implementation="com.technophobia.substeps.reference.substepsdefinition.SubstepsDefinitionReferenceContributor"/>
 
   </extensions>
 

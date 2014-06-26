@@ -23,11 +23,20 @@ public class FeatureParser implements PsiParser {
     if (root_ == BACKGROUND) {
       result_ = background(builder_, 0);
     }
+    else if (root_ == BACKGROUND_STEP_LINE) {
+      result_ = backgroundStepLine(builder_, 0);
+    }
     else if (root_ == FEATURE) {
       result_ = feature(builder_, 0);
     }
     else if (root_ == SCENARIO) {
       result_ = scenario(builder_, 0);
+    }
+    else if (root_ == SCENARIO_OUTLINE_STEP_LINE) {
+      result_ = scenarioOutlineStepLine(builder_, 0);
+    }
+    else if (root_ == SCENARIO_STEP_LINE) {
+      result_ = scenarioStepLine(builder_, 0);
     }
     else if (root_ == SCENARIO_OUTLINE) {
       result_ = scenario_outline(builder_, 0);
@@ -67,6 +76,19 @@ public class FeatureParser implements PsiParser {
   }
 
   /* ********************************************************** */
+  // (BACKGROUND_STEP) | BACKGROUND_STEP
+  public static boolean backgroundStepLine(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "backgroundStepLine")) return false;
+    if (!nextTokenIs(builder_, BACKGROUND_STEP)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, BACKGROUND_STEP);
+    if (!result_) result_ = consumeToken(builder_, BACKGROUND_STEP);
+    exit_section_(builder_, marker_, BACKGROUND_STEP_LINE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // FEATURE_LABEL FEATURE_TEXT?
   public static boolean feature(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "feature")) return false;
@@ -100,7 +122,7 @@ public class FeatureParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // feature|FEATURE_TEXT|tags|background|BACKGROUND_STEP|scenario|SCENARIO_STEP|scenario_outline|SCENARIO_OUTLINE_STEP|EXAMPLE|COMMENT|CRLF|EXAMPLE_TITLE_ROW|EXAMPLE_VALUE_ROW
+  // feature|FEATURE_TEXT|tags|background|backgroundStepLine|scenario|scenarioStepLine|scenario_outline|scenarioOutlineStepLine|EXAMPLE|COMMENT|CRLF|EXAMPLE_TITLE_ROW|EXAMPLE_VALUE_ROW
   static boolean item_(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "item_")) return false;
     boolean result_ = false;
@@ -109,11 +131,11 @@ public class FeatureParser implements PsiParser {
     if (!result_) result_ = consumeToken(builder_, FEATURE_TEXT);
     if (!result_) result_ = tags(builder_, level_ + 1);
     if (!result_) result_ = background(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, BACKGROUND_STEP);
+    if (!result_) result_ = backgroundStepLine(builder_, level_ + 1);
     if (!result_) result_ = scenario(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, SCENARIO_STEP);
+    if (!result_) result_ = scenarioStepLine(builder_, level_ + 1);
     if (!result_) result_ = scenario_outline(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, SCENARIO_OUTLINE_STEP);
+    if (!result_) result_ = scenarioOutlineStepLine(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, EXAMPLE);
     if (!result_) result_ = consumeToken(builder_, COMMENT);
     if (!result_) result_ = consumeToken(builder_, CRLF);
@@ -141,6 +163,32 @@ public class FeatureParser implements PsiParser {
     if (!recursion_guard_(builder_, level_, "scenario_1")) return false;
     consumeToken(builder_, SCENARIO_TEXT);
     return true;
+  }
+
+  /* ********************************************************** */
+  // (SCENARIO_OUTLINE_STEP) | SCENARIO_OUTLINE_STEP
+  public static boolean scenarioOutlineStepLine(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "scenarioOutlineStepLine")) return false;
+    if (!nextTokenIs(builder_, SCENARIO_OUTLINE_STEP)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, SCENARIO_OUTLINE_STEP);
+    if (!result_) result_ = consumeToken(builder_, SCENARIO_OUTLINE_STEP);
+    exit_section_(builder_, marker_, SCENARIO_OUTLINE_STEP_LINE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (SCENARIO_STEP) | SCENARIO_STEP
+  public static boolean scenarioStepLine(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "scenarioStepLine")) return false;
+    if (!nextTokenIs(builder_, SCENARIO_STEP)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, SCENARIO_STEP);
+    if (!result_) result_ = consumeToken(builder_, SCENARIO_STEP);
+    exit_section_(builder_, marker_, SCENARIO_STEP_LINE, result_);
+    return result_;
   }
 
   /* ********************************************************** */

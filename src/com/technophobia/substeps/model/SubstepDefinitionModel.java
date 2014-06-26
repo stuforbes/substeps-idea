@@ -1,19 +1,20 @@
 package com.technophobia.substeps.model;
 
-public class SubstepDefinitionModel implements Patterned{
+import com.intellij.psi.PsiElement;
+import generated.psi.SubstepsDefinitionDefinition;
 
-    private final String text;
+public class SubstepDefinitionModel implements PatternIdentifiedPsiElement {
+
     private final String filename;
-    private final int offset;
+    private final SubstepsDefinitionDefinition definition;
 
-    public SubstepDefinitionModel(String text, String filename, int offset) {
-        this.text = text;
+    public SubstepDefinitionModel(final SubstepsDefinitionDefinition definition, final String filename) {
+        this.definition = definition;
         this.filename = filename;
-        this.offset = offset;
     }
 
     public String getText() {
-        return text;
+        return definition.definitionText();
     }
 
     public String getFilename() {
@@ -21,12 +22,17 @@ public class SubstepDefinitionModel implements Patterned{
     }
 
     public int getOffset() {
-        return offset;
+        return definition.getStartOffsetInParent();
     }
 
     @Override
     public String pattern() {
-        return text;
+        return getText();
+    }
+
+    @Override
+    public PsiElement target() {
+        return definition;
     }
 
     @Override
@@ -36,27 +42,25 @@ public class SubstepDefinitionModel implements Patterned{
 
         SubstepDefinitionModel that = (SubstepDefinitionModel) o;
 
-        if (offset != that.offset) return false;
+        if (definition != null ? !definition.equals(that.definition) : that.definition != null) return false;
         if (filename != null ? !filename.equals(that.filename) : that.filename != null) return false;
-        if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = text != null ? text.hashCode() : 0;
-        result = 31 * result + (filename != null ? filename.hashCode() : 0);
-        result = 31 * result + offset;
+        int result = filename != null ? filename.hashCode() : 0;
+        result = 31 * result + (definition != null ? definition.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "SubstepDefinitionModel{" +
-                "text='" + text + '\'' +
+                "text='" + getText() + '\'' +
                 ", filename='" + filename + '\'' +
-                ", offset=" + offset +
+                ", offset=" + getOffset() +
                 '}';
     }
 }

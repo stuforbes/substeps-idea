@@ -1,8 +1,10 @@
 package com.technophobia.substeps.model;
 
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 
-public class SubstepImplementationModel implements Patterned{
+public class SubstepImplementationModel implements PatternIdentifiedPsiElement {
 
     private final String text;
     private final PsiClass javaClass;
@@ -29,6 +31,16 @@ public class SubstepImplementationModel implements Patterned{
     @Override
     public String pattern() {
         return text;
+    }
+
+    @Override
+    public PsiElement target() {
+        for(final PsiMethod method : javaClass.getMethods()){
+            if(method.getName().equals(methodName)){
+                return method;
+            }
+        }
+        return null;
     }
 
     @Override

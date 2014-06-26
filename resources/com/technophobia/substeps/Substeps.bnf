@@ -17,6 +17,7 @@
 substepsFile ::= item_*
 
 private item_ ::= (definition|stepLine|GENERAL_DIRECTIVE|COMMENT|CRLF)
-definition ::= (DEFINITION_LABEL DEFINITION_TEXT?)
+definition ::= (DEFINITION_LABEL DEFINITION_TEXT?) { mixin="com.technophobia.substeps.psi.substepsdefinition.impl.SubstepDefinitionNamedElementImpl"
+    implements="com.technophobia.substeps.psi.substepsdefinition.SubstepDefinitionNamedElement" methods=[definitionText getNameIdentifier getName setName]}
 
-stepLine ::= (STEP) | STEP {methods=[definitionForStepText]}
+stepLine ::= (STEP) | STEP { implements="com.intellij.psi.ContributedReferenceHost" methods=[definitionForStepText getReferences]}

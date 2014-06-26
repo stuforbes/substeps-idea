@@ -11,6 +11,7 @@ import static com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitio
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import generated.psi.*;
 import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
+import com.intellij.psi.PsiReference;
 
 public class SubstepsDefinitionStepLineImpl extends ASTWrapperPsiElement implements SubstepsDefinitionStepLine {
 
@@ -25,6 +26,10 @@ public class SubstepsDefinitionStepLineImpl extends ASTWrapperPsiElement impleme
 
   public String definitionForStepText() {
     return SubstepsDefinitionPsiImplUtil.definitionForStepText(this);
+  }
+
+  public PsiReference[] getReferences() {
+    return SubstepsDefinitionPsiImplUtil.getReferences(this);
   }
 
 }

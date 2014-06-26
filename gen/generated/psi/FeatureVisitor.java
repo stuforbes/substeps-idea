@@ -11,11 +11,23 @@ public class FeatureVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBackgroundStepLine(@NotNull FeatureBackgroundStepLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitFeature(@NotNull FeatureFeature o) {
     visitPsiElement(o);
   }
 
   public void visitScenario(@NotNull FeatureScenario o) {
+    visitPsiElement(o);
+  }
+
+  public void visitScenarioOutlineStepLine(@NotNull FeatureScenarioOutlineStepLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitScenarioStepLine(@NotNull FeatureScenarioStepLine o) {
     visitPsiElement(o);
   }
 

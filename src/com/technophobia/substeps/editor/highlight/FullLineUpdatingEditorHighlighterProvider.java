@@ -1,4 +1,4 @@
-package com.technophobia.substeps.editor;
+package com.technophobia.substeps.editor.highlight;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;

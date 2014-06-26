@@ -3,13 +3,15 @@ package com.technophobia.substeps.model.syntax;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.intellij.openapi.util.Pair;
+import com.technophobia.substeps.model.PatternIdentifiedPsiElement;
 import com.technophobia.substeps.model.PatternMap;
-import com.technophobia.substeps.model.Patterned;
 import com.technophobia.substeps.model.SubstepDefinitionModel;
 import com.technophobia.substeps.model.SubstepImplementationModel;
 import com.technophobia.substeps.model.exception.StepImplementationException;
 import com.technophobia.substeps.model.exception.SubstepParsingException;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class IdeaSyntax {
@@ -32,16 +34,23 @@ public class IdeaSyntax {
         this.syntaxErrorReporter = syntaxErrorReporter;
     }
 
-    public Optional<Patterned> stepImplementationMatching(final String pattern){
-        return Optional.fromNullable((Patterned)stepImplementations.getValueForPattern(pattern));
+    public Optional<PatternIdentifiedPsiElement> stepImplementationMatching(final String pattern){
+        return Optional.fromNullable((PatternIdentifiedPsiElement)stepImplementations.getValueForPattern(pattern));
     }
 
-    public Optional<Patterned> substepDefinitionMatching(final String pattern){
-        return Optional.fromNullable((Patterned)substepDefinitions.getValueForPattern(pattern));
+    public Optional<PatternIdentifiedPsiElement> substepDefinitionMatching(final String pattern){
+        return Optional.fromNullable((PatternIdentifiedPsiElement)substepDefinitions.getValueForPattern(pattern));
     }
 
+    public Collection<? extends PatternIdentifiedPsiElement> allStepImplementations() {
+        return Collections.unmodifiableCollection(stepImplementations.values());
+    }
 
-    private static <T extends Patterned> PatternMap<T> toPatternMap(final List<T> items, Function<Pair<String, T>, Void> onError) {
+    public Collection<? extends PatternIdentifiedPsiElement> allSubstepDefinitions() {
+        return Collections.unmodifiableCollection(substepDefinitions.values());
+    }
+
+    private static <T extends PatternIdentifiedPsiElement> PatternMap<T> toPatternMap(final List<T> items, Function<Pair<String, T>, Void> onError) {
         final PatternMap<T> patternMap = new PatternMap<T>();
         for (final T item : items) {
 

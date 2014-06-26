@@ -1,32 +1,29 @@
-package com.technophobia.substeps.search.substepsdefinition;
+package com.technophobia.substeps.editor.annotation.feature;
 
 import com.google.common.base.Optional;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.editor.SyntaxHighlighterColors;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import com.technophobia.substeps.model.Patterned;
+import com.technophobia.substeps.model.PatternIdentifiedPsiElement;
+import com.technophobia.substeps.search.substepsdefinition.SubstepDefinitionSearchUtil;
 import com.technophobia.substeps.syntax.Colours;
-import generated.psi.SubstepsDefinitionDefinition;
-import generated.psi.SubstepsDefinitionStepLine;
+import generated.psi.FeatureBackgroundStepLine;
+import generated.psi.FeatureScenarioOutlineStepLine;
+import generated.psi.FeatureScenarioStepLine;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-public class SubstepsDefinitionAnnotator implements Annotator {
+public class FeatureAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-        if(element instanceof SubstepsDefinitionStepLine){
-            SubstepsDefinitionStepLine stepDefinitionLine = (SubstepsDefinitionStepLine) element;
+        if(isStepLine(element) ){
 
-            String text = stepDefinitionLine.getText();
+            String text = element.getText();
             if(text != null){
                 final Project project = element.getProject();
-                final Optional<Patterned> stepDefinition = SubstepDefinitionSearchUtil.findDefinition(project, text.trim());
+                final Optional<PatternIdentifiedPsiElement> stepDefinition = SubstepDefinitionSearchUtil.findDefinition(project, text.trim());
                 if(stepDefinition.isPresent()){
                     final Annotation annotation = holder.createInfoAnnotation(element.getTextRange(), null);
                     annotation.setEnforcedTextAttributes(Colours.VALID_STEP.attributes());
@@ -35,5 +32,11 @@ public class SubstepsDefinitionAnnotator implements Annotator {
                 }
             }
         }
+    }
+
+    private boolean isStepLine(PsiElement element){
+        return element instanceof FeatureBackgroundStepLine ||
+                element instanceof FeatureScenarioStepLine ||
+                element instanceof FeatureScenarioOutlineStepLine;
     }
 }

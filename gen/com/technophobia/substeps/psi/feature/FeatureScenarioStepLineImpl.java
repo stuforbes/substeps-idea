@@ -12,15 +12,19 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import generated.psi.*;
 import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
 
-public class FeatureScenarioOutlineImpl extends ASTWrapperPsiElement implements FeatureScenarioOutline {
+public class FeatureScenarioStepLineImpl extends ASTWrapperPsiElement implements FeatureScenarioStepLine {
 
-  public FeatureScenarioOutlineImpl(ASTNode node) {
+  public FeatureScenarioStepLineImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof FeatureVisitor) ((FeatureVisitor)visitor).visitScenarioOutline(this);
+    if (visitor instanceof FeatureVisitor) ((FeatureVisitor)visitor).visitScenarioStepLine(this);
     else super.accept(visitor);
+  }
+
+  public String definitionForStepText() {
+    return SubstepsDefinitionPsiImplUtil.definitionForStepText(this);
   }
 
 }
