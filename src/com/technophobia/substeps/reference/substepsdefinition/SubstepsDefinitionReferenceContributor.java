@@ -4,14 +4,11 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.*;
 import com.intellij.util.ProcessingContext;
+import com.technophobia.substeps.reference.SubstepsReference;
 import generated.psi.SubstepsDefinitionStepLine;
 import org.jetbrains.annotations.NotNull;
 
 public class SubstepsDefinitionReferenceContributor extends PsiReferenceContributor{
-
-    public SubstepsDefinitionReferenceContributor(){
-        System.out.println("Substeps reference contributor");
-    }
 
     @Override
     public void registerReferenceProviders(PsiReferenceRegistrar registrar) {
@@ -24,7 +21,7 @@ public class SubstepsDefinitionReferenceContributor extends PsiReferenceContribu
                         final String stepLine = element.getText();
                         TextRange textRange = nonWhitespaceTextRange(stepLine);
 
-                        return new PsiReference[]{new SubstepsDefinitionReference(element, textRange)};
+                        return new PsiReference[]{new SubstepsReference(element, textRange)};
                     }
                 });
     }

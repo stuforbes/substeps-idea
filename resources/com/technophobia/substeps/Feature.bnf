@@ -6,7 +6,7 @@
     psiImplClassSuffix="Impl"
     psiImplPackage="com.technophobia.substeps.psi.feature"
     psiImplPackage="com.technophobia.substeps.psi.feature.impl"
-    psiImplUtilClass="com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil"
+    psiImplUtilClass="com.technophobia.substeps.psi.feature.impl.FeaturePsiImplUtil"
 
     elementTypeHolderClass="com.technophobia.substeps.psi.feature.FeatureTypes"
     elementTypeClass="com.technophobia.substeps.psi.feature.FeatureElementType"
@@ -20,11 +20,11 @@ private item_ ::= (feature|FEATURE_TEXT|tags|background|backgroundStepLine|scena
 feature ::= (FEATURE_LABEL FEATURE_TEXT?)
 tags ::= (TAGS_LABEL TAGS_TEXT?)
 background ::= (BACKGROUND_LABEL BACKGROUND_TEXT?)
-scenario ::= (SCENARIO_LABEL SCENARIO_TEXT?)
-scenario_outline ::= (SCENARIO_OUTLINE_LABEL SCENARIO_OUTLINE_TEXT?)
+scenario ::= (SCENARIO_LABEL SCENARIO_TEXT?) { implements="com.technophobia.substeps.psi.feature.ScenarioElement" methods=[getNameIdentifier getName setName]}
+scenario_outline ::= (SCENARIO_OUTLINE_LABEL SCENARIO_OUTLINE_TEXT?) { implements="com.technophobia.substeps.psi.feature.ScenarioElement" methods=[getNameIdentifier getName setName]}
 
-backgroundStepLine ::= (BACKGROUND_STEP) | BACKGROUND_STEP {methods=[definitionForStepText]}
-scenarioStepLine ::= (SCENARIO_STEP) | SCENARIO_STEP {methods=[definitionForStepText]}
-scenarioOutlineStepLine ::= (SCENARIO_OUTLINE_STEP) | SCENARIO_OUTLINE_STEP {methods=[definitionForStepText]}
+backgroundStepLine ::= (BACKGROUND_STEP) | BACKGROUND_STEP {implements="com.intellij.psi.ContributedReferenceHost" methods=[definitionForStepText getReferences]}
+scenarioStepLine ::= (SCENARIO_STEP) | SCENARIO_STEP {implements="com.intellij.psi.ContributedReferenceHost" methods=[definitionForStepText getReferences]}
+scenarioOutlineStepLine ::= (SCENARIO_OUTLINE_STEP) | SCENARIO_OUTLINE_STEP {implements="com.intellij.psi.ContributedReferenceHost" methods=[definitionForStepText getReferences]}
 //example_title_row ::= (EXAMPLE_TITLE_SEPARATOR EXAMPLE_FIELD_NAME)
 //example_value_row ::= (EXAMPLE_VALUE_SEPARATOR EXAMPLE_FIELD_VALUE)*

@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.technophobia.substeps.psi.feature.FeatureTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import generated.psi.*;
-import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
+import com.technophobia.substeps.psi.feature.impl.FeaturePsiImplUtil;
 
 public class FeatureScenarioOutlineImpl extends ASTWrapperPsiElement implements FeatureScenarioOutline {
 
@@ -21,6 +21,18 @@ public class FeatureScenarioOutlineImpl extends ASTWrapperPsiElement implements 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FeatureVisitor) ((FeatureVisitor)visitor).visitScenarioOutline(this);
     else super.accept(visitor);
+  }
+
+  public PsiElement getNameIdentifier() {
+    return FeaturePsiImplUtil.getNameIdentifier(this);
+  }
+
+  public String getName() {
+    return FeaturePsiImplUtil.getName(this);
+  }
+
+  public PsiElement setName(String newName) {
+    return FeaturePsiImplUtil.setName(this, newName);
   }
 
 }

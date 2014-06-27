@@ -4,9 +4,13 @@ package generated.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.ContributedReferenceHost;
+import com.intellij.psi.PsiReference;
 
-public interface FeatureScenarioOutlineStepLine extends PsiElement {
+public interface FeatureScenarioOutlineStepLine extends ContributedReferenceHost {
 
   String definitionForStepText();
+
+  PsiReference[] getReferences();
 
 }

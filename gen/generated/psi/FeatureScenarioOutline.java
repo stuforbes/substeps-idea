@@ -4,7 +4,14 @@ package generated.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.technophobia.substeps.psi.feature.ScenarioElement;
 
-public interface FeatureScenarioOutline extends PsiElement {
+public interface FeatureScenarioOutline extends ScenarioElement {
+
+  PsiElement getNameIdentifier();
+
+  String getName();
+
+  PsiElement setName(String newName);
 
 }

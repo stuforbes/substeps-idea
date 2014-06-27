@@ -1,4 +1,4 @@
-package com.technophobia.substeps.reference.substepsdefinition;
+package com.technophobia.substeps.reference;
 
 import com.google.common.base.Optional;
 import com.intellij.codeInsight.lookup.LookupElement;
@@ -16,15 +16,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubstepsDefinitionReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference{
+public class SubstepsReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference{
 
     private final String stepText;
 
-    public SubstepsDefinitionReference(@NotNull final PsiElement element, final TextRange textRange){
+    public SubstepsReference(@NotNull final PsiElement element, final TextRange textRange){
         super(element, textRange);
-
-        System.out.println("step text: "+element.getText()+", text range: "+textRange);
-
         this.stepText = element.getText().substring(textRange.getStartOffset(), textRange.getEndOffset());
     }
 

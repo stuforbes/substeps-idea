@@ -35,6 +35,8 @@
       <lang.parserDefinition language="Substeps" implementationClass="com.technophobia.substeps.parser.substepsdefinition.SubstepsDefinitionParserDefinition"/>
       <lang.parserDefinition language="Feature" implementationClass="com.technophobia.substeps.parser.feature.FeatureParserDefinition"/>
 
+      <lang.refactoringSupport language="Substeps" implementationClass="com.technophobia.substeps.refactor.substepsdefinitions.SubstepsDefinitionRefactoringSupportProvider"/>
+
       <lang.syntaxHighlighterFactory key="Substeps" implementationClass="com.technophobia.substeps.syntax.substepsdefinition.SubstepsDefinitionSyntaxHighlighterFactory"/>
       <lang.syntaxHighlighterFactory key="Feature" implementationClass="com.technophobia.substeps.syntax.feature.FeatureSyntaxHighlighterFactory"/>
 
@@ -42,6 +44,7 @@
       <editorHighlighterProvider filetype="Feature file" implementationClass="com.technophobia.substeps.editor.highlight.FullLineUpdatingEditorHighlighterProvider"/>
 
       <psi.referenceContributor language="Substeps" implementation="com.technophobia.substeps.reference.substepsdefinition.SubstepsDefinitionReferenceContributor"/>
+      <psi.referenceContributor language="Feature" implementation="com.technophobia.substeps.reference.feature.FeatureReferenceContributor"/>
 
   </extensions>
 

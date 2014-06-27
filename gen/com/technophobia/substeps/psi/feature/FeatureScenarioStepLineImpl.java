@@ -10,7 +10,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.technophobia.substeps.psi.feature.FeatureTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import generated.psi.*;
-import com.technophobia.substeps.psi.substepsdefinition.impl.SubstepsDefinitionPsiImplUtil;
+import com.technophobia.substeps.psi.feature.impl.FeaturePsiImplUtil;
+import com.intellij.psi.PsiReference;
 
 public class FeatureScenarioStepLineImpl extends ASTWrapperPsiElement implements FeatureScenarioStepLine {
 
@@ -24,7 +25,11 @@ public class FeatureScenarioStepLineImpl extends ASTWrapperPsiElement implements
   }
 
   public String definitionForStepText() {
-    return SubstepsDefinitionPsiImplUtil.definitionForStepText(this);
+    return FeaturePsiImplUtil.definitionForStepText(this);
+  }
+
+  public PsiReference[] getReferences() {
+    return FeaturePsiImplUtil.getReferences(this);
   }
 
 }
