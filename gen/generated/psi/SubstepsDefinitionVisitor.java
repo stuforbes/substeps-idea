@@ -10,6 +10,10 @@ import com.intellij.psi.ContributedReferenceHost;
 public class SubstepsDefinitionVisitor extends PsiElementVisitor {
 
   public void visitDefinition(@NotNull SubstepsDefinitionDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefinitionTextBlock(@NotNull SubstepsDefinitionDefinitionTextBlock o) {
     visitSubstepDefinitionNamedElement(o);
   }
 

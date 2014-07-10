@@ -4,15 +4,17 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFileFactory;
 import com.technophobia.substeps.language.SubstepsFileType;
 import generated.psi.SubstepsDefinitionDefinition;
+import generated.psi.SubstepsDefinitionDefinitionTextBlock;
 
 public class SubstepsDefinitionElementFactory {
 
     private static final String DEFINE_LABEL = "Define: ";
 
-    public static SubstepsDefinitionDefinition createDefinition(final Project project, final String definitionText){
+    public static SubstepsDefinitionDefinitionTextBlock createDefinition(final Project project, final String definitionText){
         final SubstepsDefinitionFile file = createFile(project, DEFINE_LABEL +definitionText);
 
-        return (SubstepsDefinitionDefinition)file.getFirstChild();
+        SubstepsDefinitionDefinition definition = (SubstepsDefinitionDefinition) file.getFirstChild();
+        return definition.getDefinitionTextBlock();
     }
 
     private static SubstepsDefinitionFile createFile(final Project project, final String definitionText) {

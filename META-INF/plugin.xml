@@ -32,6 +32,8 @@
 
       <fileTypeFactory implementation="com.technophobia.substeps.language.SubstepsFileTypeFactory"/>
 
+      <lang.findUsagesProvider language="Substeps" implementationClass="com.technophobia.substeps.reference.substepsdefinition.SubstepsDefinitionFindUsagesProvider"/>
+
       <lang.parserDefinition language="Substeps" implementationClass="com.technophobia.substeps.parser.substepsdefinition.SubstepsDefinitionParserDefinition"/>
       <lang.parserDefinition language="Feature" implementationClass="com.technophobia.substeps.parser.feature.FeatureParserDefinition"/>
 

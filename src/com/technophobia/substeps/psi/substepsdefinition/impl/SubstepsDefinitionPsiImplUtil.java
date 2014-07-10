@@ -11,6 +11,7 @@ import com.technophobia.substeps.model.SubstepsModel;
 import com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionElementFactory;
 import com.technophobia.substeps.psi.substepsdefinition.SubstepsDefinitionTypes;
 import generated.psi.SubstepsDefinitionDefinition;
+import generated.psi.SubstepsDefinitionDefinitionTextBlock;
 import generated.psi.SubstepsDefinitionStepLine;
 
 public class SubstepsDefinitionPsiImplUtil {
@@ -24,7 +25,7 @@ public class SubstepsDefinitionPsiImplUtil {
      * @param definition The definition line
      * @return The text located in the definition text child element
      */
-    public static String definitionText(final SubstepsDefinitionDefinition definition){
+    public static String definitionText(final SubstepsDefinitionDefinitionTextBlock definition){
         ASTNode definitionTextNode = definition.getNode().findChildByType(SubstepsDefinitionTypes.DEFINITION_TEXT);
         if(definitionTextNode != null){
             return definitionTextNode.getText();
@@ -33,15 +34,15 @@ public class SubstepsDefinitionPsiImplUtil {
     }
 
 
-    public static String getName(SubstepsDefinitionDefinition definition){
+    public static String getName(SubstepsDefinitionDefinitionTextBlock definition){
         return definitionText(definition);
     }
 
-    public static PsiElement setName(SubstepsDefinitionDefinition definition, String newName){
+    public static PsiElement setName(SubstepsDefinitionDefinitionTextBlock definition, String newName){
         final ASTNode textNode = definition.getNode().findChildByType(SubstepsDefinitionTypes.DEFINITION_TEXT);
         if(textNode != null){
 
-            final SubstepsDefinitionDefinition newDefinition = SubstepsDefinitionElementFactory.createDefinition(definition.getProject(), newName);
+            final SubstepsDefinitionDefinitionTextBlock newDefinition = SubstepsDefinitionElementFactory.createDefinition(definition.getProject(), newName);
             final ASTNode newTextNode = newDefinition.getNode().findChildByType(SubstepsDefinitionTypes.DEFINITION_TEXT);
             if(newTextNode != null) {
                 definition.getNode().replaceChild(textNode, newTextNode);

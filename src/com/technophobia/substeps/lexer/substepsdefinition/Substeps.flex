@@ -41,7 +41,7 @@ Comment=("#"|"!")[^\r\n]*
 
 <CREATING_DEFINITION_TEXT> {Crlf}                                   { yybegin(CREATING_DEFINITION_STEPS); return SubstepsDefinitionTypes.CRLF; }
 
-<CREATING_DEFINITION_TEXT> {FirstTextCharacter}{TextCharacter}*     { yybegin(CREATING_DEFINITION_TEXT); return SubstepsDefinitionTypes.DEFINITION_TEXT; }
+<CREATING_DEFINITION_TEXT> {FirstTextCharacter}{TextCharacter}*     { yybegin(CREATING_DEFINITION_TEXT); return SubstepsDefinitionTypes.DEFINITION_TEXT_BLOCK; }
 
 <CREATING_DEFINITION_STEPS> {WhiteSpace}+{FirstTextCharacter}{TextCharacter}* { yybegin(CREATING_DEFINITION_STEPS); return SubstepsDefinitionTypes.STEP; }
 

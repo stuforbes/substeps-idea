@@ -23,6 +23,9 @@ public class SubstepsParser implements PsiParser {
     if (root_ == DEFINITION) {
       result_ = definition(builder_, 0);
     }
+    else if (root_ == DEFINITION_TEXT_BLOCK) {
+      result_ = definition_text_block(builder_, 0);
+    }
     else if (root_ == STEP_LINE) {
       result_ = stepLine(builder_, 0);
     }
@@ -38,7 +41,7 @@ public class SubstepsParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // DEFINITION_LABEL DEFINITION_TEXT?
+  // DEFINITION_LABEL definition_text_block?
   public static boolean definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "definition")) return false;
     if (!nextTokenIs(builder_, DEFINITION_LABEL)) return false;
@@ -50,11 +53,23 @@ public class SubstepsParser implements PsiParser {
     return result_;
   }
 
-  // DEFINITION_TEXT?
+  // definition_text_block?
   private static boolean definition_1(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "definition_1")) return false;
-    consumeToken(builder_, DEFINITION_TEXT);
+    definition_text_block(builder_, level_ + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // (DEFINITION_TEXT)
+  public static boolean definition_text_block(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "definition_text_block")) return false;
+    if (!nextTokenIs(builder_, DEFINITION_TEXT)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DEFINITION_TEXT);
+    exit_section_(builder_, marker_, DEFINITION_TEXT_BLOCK, result_);
+    return result_;
   }
 
   /* ********************************************************** */
